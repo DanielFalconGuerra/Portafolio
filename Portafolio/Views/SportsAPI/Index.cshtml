@@ -1,9 +1,23 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Portafolio.Models.APIFutbol.Totals;
+@using System.Linq;
 @{
+    ViewData["Title"] = "API de Futbol";
 }
-
+<style>
+    pre {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        white-space: pre-wrap; /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap; /* Opera <7 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* IE */
+    }
+</style>
 <p class="h1 text-center mb-3 mt-3">API de Futbol</p>
 <p class="h2 mt-2">Descripción del Proyecto</p>
 <div class="card">
@@ -18,11 +32,7 @@
     <div class="card-body">
         <p>La API cuenta con los siguientes endpoints:</p>
         <ul>
-            <li><a href="https://api.futbol.dev-mobile.net/api/teams">Equipos</a></li>
-            <li><a href="https://api.futbol.dev-mobile.net/api/players">Jugadores</a></li>
-            <li><a href="https://api.futbol.dev-mobile.net/api/matches">Partidos</a></li>
-            <li><a href="https://api.futbol.dev-mobile.net/api/stadiums">Estadios</a></li>
-            <li><a href="https://api.futbol.dev-mobile.net/api/statistics">Estadísticas</a></li>
+            <li><a href="https://api.futbol.dev-mobile.net/players">Players</a></li>
         </ul>
     </div>
 </div>
@@ -36,48 +46,81 @@
                 <tr>
                     <th>Type</th>
                     <th>URL</th>
+                    <th>Params</th>
                     <th>Descripción</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>GET</td>
-                    <td>https://api.futbol.dev-mobile.net/api/players</td>
-                    <td>Obtiene todos los jugadores</td>
+                    <td>
+                        <div class="alert alert-primary" role="alert">
+                            GET
+                        </div>
+                    </td>
+                    <td class="url-cell">https://api.futbol.dev-mobile.net/players/GetPlayers</td>
+                    <td></td>
+                    <td>Función de prueba que devuelve 10 jugadores con datos que no pertenecen a la DB</td>
                 </tr>
                 <tr>
-                    <td>GET</td>
-                    <td>https://api.futbol.dev-mobile.net/api/players/{id}</td>
-                    <td>Obtiene un jugador por su ID</td>
+                    <td>
+                        <div class="alert alert-primary" role="alert">
+                            GET
+                        </div>
+                    </td>
+                    <td class="url-cell">https://api.futbol.dev-mobile.net/players/GetPlayersFromDB</td>
+                    <td></td>
+                    <td>Obtiene todos los jugadores de la DB</td>
                 </tr>
                 <tr>
-                    <td>POST</td>
-                    <td>https://api.futbol.dev-mobile.net/api/players</td>
-                    <td>Registra un nuevo jugador</td>
-                </tr>
-                <tr>
-                    <td>PUT</td>
-                    <td>https://api.futbol.dev-mobile.net/api/players/{id}</td>
-                    <td>Actualiza un jugador por su ID</td>
-                </tr>
-                <tr>
-                    <td>DELETE</td>
-                    <td>https://api.futbol.dev-mobile.net/api/players/{id}</td>
-                    <td>Elimina un jugador por su ID</td>
+                    <td>
+                        <div class="alert alert-primary" role="alert">
+                            GET
+                        </div>
+                    </td>
+                    <td class="url-cell">https://api.futbol.dev-mobile.net/players/GetImage</td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="nombre_imagen" />
+                    </td>
+                    <td>Devuelve una fotografia de algún jugador</td>
                 </tr>
         </table>
+        <p>Las peticiones realizadas a todos los metodos POST y PUT son enviados a revisión y pueden o no ser aceptados</p>
     </div>
 </div>
+
+<p class="h2 mt-2">Ejemplo de uso</p>
+<div class="card">
+    <div class="card-header">
+        <p>Respuesta de la petición: <b id="respuesta"></b></p>
+    </div>
+    <div class="card-body">
+        <pre id="jsonDisplay"></pre>
+    </div>
+</div>
+
+
 <p class="h3 mt-2">Datos</p>
 <div class="card">
     <div class="card-body">
         <p>Actualmente la API cuenta con las siguientes cantidades de datos registrados</p>
         <ul>
-            <li>Equipos: 20</li>
-            <li>Jugadores: 100</li>
-            <li>Partidos: 50</li>
-            <li>Estadios: 10</li>
-            <li>Estadísticas: 100</li>
+            @{
+                if(Model != null)
+                {
+                    foreach (var item in Model.GetType().GetProperties())
+                    {
+                            <li>@item.Name: @item.GetValue(Model)</li>
+                    }
+                }
+                else
+                {
+                        <li>No hay datos registrados</li>
+                }
+            }
         </ul>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/js/apifutbol/JsonData.js"></script>
+<script src="~/js/apifutbol/apifutbol.js"></script>

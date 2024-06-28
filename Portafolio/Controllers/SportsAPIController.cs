@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Portafolio.Repositories;
 
 namespace Portafolio.Controllers
 {
     public class SportsAPIController : Controller
     {
-        public IActionResult Index()
+        private readonly IApiFutbolRepository _apiFutbolRepository;
+        public SportsAPIController(IApiFutbolRepository apiFutbolRepository)
         {
-            return View();
+            _apiFutbolRepository = apiFutbolRepository;
         }
+        public async Task<IActionResult> Index()
+        {
+            var totals = await _apiFutbolRepository.getTotals();
+            return View(totals);
+        }
+
     }
 }
