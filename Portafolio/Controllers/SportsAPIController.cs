@@ -12,8 +12,16 @@ namespace Portafolio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var totals = await _apiFutbolRepository.getTotals();
-            return View(totals);
+            var response = await _apiFutbolRepository.getTotals();
+            if(response == null)
+            {
+                return NotFound();
+            }
+            if(response.statusCode != 200)
+            {
+                return NotFound();
+            }
+            return View(response.total);
         }
 
     }

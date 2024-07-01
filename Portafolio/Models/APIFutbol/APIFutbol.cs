@@ -14,4 +14,11 @@
         public int statistics { get; set; }
         public int total { get; set; }
     }
+
+    public class ResponseTotals
+    {
+        public string message { get; set; }
+        public Totals total { get; set; }
+        public int statusCode { get; set; }
+    }
 }

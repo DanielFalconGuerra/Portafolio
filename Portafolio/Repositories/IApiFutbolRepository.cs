@@ -4,6 +4,6 @@ namespace Portafolio.Repositories
 {
     public interface IApiFutbolRepository
     {
-        Task<Totals> getTotals();
+        Task<ResponseTotals> getTotals();
     }
 }

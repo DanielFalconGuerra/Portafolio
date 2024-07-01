@@ -15,13 +15,13 @@ namespace Portafolio.Repositories
             _baseAddress = baseAddress;
             _restClient = new RestClient(baseAddress);
         }
-        public async Task<Totals> getTotals()
+        public async Task<ResponseTotals> getTotals()
         {
             var request = new RestRequest("Documentation/getTotals", Method.Get);
             //var response = _restClient.Execute<Totals>(request);
             try
             {
-                var response = await _restClient.ExecuteAsync<Totals>(request);
+                var response = await _restClient.ExecuteAsync<ResponseTotals>(request);
                 return response.Data;
             }catch(Exception e)
             {
